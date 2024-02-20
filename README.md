@@ -13,7 +13,7 @@ The primary goal of this repository is to showcase my learning journey, track pr
 Weekly practice exercises are organized chronologically:
 
 ## Week One
-- [Hosts File Editor](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayOneHostsFileEditor/src/Main.java)
+- [Hosts File Editor](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayOneHostsFileEditor)
 
 
 ### Getting Started
