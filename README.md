@@ -15,6 +15,9 @@ Weekly practice exercises are organized chronologically:
 ## Day One
 - [Hosts File Editor](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayOneHostsFileEditor)
 
+## Day Three
+- [Check Anagram](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayThreeCheckAnagram)
+
 
 ### Getting Started
 
