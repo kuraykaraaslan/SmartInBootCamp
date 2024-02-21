@@ -50,8 +50,8 @@ public class Main {
     /*
      * This method reads from hosts file and populates the hosts HashMap.
      */
-    public void readHostsFile() {
-        File file = new File(hostsFilePath);
+    public void readHostsFile(String input) {
+        File file = new File(input);
         if (!file.exists()) {
             System.out.println("File not found Create a new one? (y/n)");
             while (true) {
@@ -120,14 +120,16 @@ public class Main {
     /*
      * This method writes the hosts HashMap to the hosts file.
      */
-    public void printHostsFile() {
+    public void printHostsFile(String output) {
         try
         {
-            File file = new File(hostsFilePath);
+            File file = new File(output);
 
+            /*
             if (!file.exists()) {
                 file.delete();
             }
+            */
 
             FileWriter fileWriter = new FileWriter(file);
 
@@ -247,7 +249,7 @@ public class Main {
      * This method saves the changes to the hosts file.
      */
     public void saveChanges() {
-        printHostsFile();
+        //printHostsFile();
     }
 
     /*
@@ -313,7 +315,7 @@ public class Main {
     /*
      * This method is the entry point of the application.
      */
-    public void Editor() {
+    public void editor() {
         // Ask for hosts file path
         System.out.println("Enter the hosts file path: Default is ./hosts (ENTER to use default, x to cancel)");
         String input = scanner.nextLine();
@@ -329,7 +331,7 @@ public class Main {
         }
 
         // Read hosts file
-        readHostsFile();
+        //readHostsFile();
 
         // Show main menu
         showMenu();
@@ -337,7 +339,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main editor = new Main();
-        editor.Editor();
+        Main main = new Main();
+        main.readHostsFile("./hosts");
+        main.readHostsFile("./Myhosts.txt");
+        main.printHostsFile("./hosts");
     }
 }

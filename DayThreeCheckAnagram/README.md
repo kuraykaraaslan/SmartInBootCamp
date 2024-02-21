@@ -19,21 +19,6 @@ bash check_anagram.sh "listen" "silent"
 
 This script requires Bash to be installed on your system.
 
-## How it Works
-
-1. The script extracts the two words from the command line arguments.
-
-2. It initializes an associative array `letter_prime_map` where Turkish letters are mapped to prime numbers.
-
-3. It checks if the lengths of the two words are equal. If not, it prints a message and exits.
-
-4. It calculates the product of prime numbers for each word by iterating over each letter of the words and looking up the corresponding prime number in the `letter_prime_map`.
-
-5. Finally, it compares the products of prime numbers for the two words. If they are equal, it prints a message indicating that the words are anagrams; otherwise, it prints a message indicating that they are not anagrams.
-
-## Note
-
-- This script is specifically designed to handle Turkish characters due to the mapping of Turkish letters to prime numbers in the `letter_prime_map`.
 
 ## License
 
