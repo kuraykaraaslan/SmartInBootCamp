@@ -10,9 +10,9 @@ The primary goal of this repository is to showcase my learning journey, track pr
 
 ## Practice Exercises
 
-Weekly practice exercises are organized chronologically:
+Daily practice exercises are organized chronologically:
 
-## Day One
+## Day Two
 - [Hosts File Editor](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayOneHostsFileEditor)
 
 ## Day Three

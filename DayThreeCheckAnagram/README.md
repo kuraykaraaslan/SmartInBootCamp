@@ -12,7 +12,7 @@ To use this script, follow these steps:
 
 Example:
 ```
-bash anagram_checker.sh "listen" "silent"
+bash check_anagram.sh "listen" "silent"
 ```
 
 ## Requirements
