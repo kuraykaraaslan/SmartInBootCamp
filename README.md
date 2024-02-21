@@ -12,8 +12,12 @@ The primary goal of this repository is to showcase my learning journey, track pr
 
 Daily practice exercises are organized chronologically:
 
+## Day One
+
+The first day of the bootcamp was dedicated to learning about culture, the company, and the team. No practice exercises were completed on this day.
+
 ## Day Two
-- [Hosts File Editor](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayOneHostsFileEditor)
+- [Hosts File Editor](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayTwoHostsFileEditor)
 
 ## Day Three
 - [Check Anagram](https://github.com/kuraykaraaslan/SystemDeveloperBootcamp/blob/main/DayThreeCheckAnagram)
