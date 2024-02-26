@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/bootcamp_bw_kuray_new/SharedResources/Schemas/Schema.xsd" xmlns:tns="http://xmlns.example.com/1708721390868" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://ws-i.org/profiles/basic/1.1/xsd" targetNamespace="http://xmlns.example.com/1708721390868">
+    <import namespace="http://www.tibco.com/schemas/bootcamp_bw_kuray_new/SharedResources/Schemas/Schema.xsd" location="../Schemas/UserSchema.xsd"/>
+    <import namespace="http://ws-i.org/profiles/basic/1.1/xsd"/>
+    <message name="ReqAddUser">
+        <part name="Request" element="ns:User"/>
+    </message>
+    <message name="RespAddUser">
+        <part name="Meesage" type="xsd:string"/>
+    </message>
+    <message name="ReqDeleteUser">
+        <part name="Request" element="ns:UserID"/>
+    </message>
+    <message name="RespDeleteUser">
+        <part name="Message" type="xsd:string"/>
+    </message>
+    <message name="ReqGetUser">
+        <part name="Request" element="ns:UserID"/>
+    </message>
+    <message name="RespGetUser">
+        <part name="Response" element="ns:User"/>
+    </message>
+    <message name="ReqGetUsers"/>
+    <message name="RespGetUsers">
+        <part name="Response" element="ns:Users"/>
+    </message>
+    <message name="ReqGetInventories"/>
+    <message name="RespGetInventories">
+        <part name="Response" element="ns:UserInventories"/>
+    </message>
+    <message name="ReqGetInventoriesV2">
+        <part name="Req" element="ns:InventoriesReq"/>
+    </message>
+    <message name="RespGetInventoriesV2">
+        <part name="Resp" element="ns:InventoriesResp"/>
+    </message>
+    <portType name="UsersPortType">
+        <operation name="AddUser">
+            <input message="tns:ReqAddUser"/>
+            <output message="tns:RespAddUser"/>
+        </operation>
+        <operation name="DeleteUser">
+            <input message="tns:ReqDeleteUser"/>
+            <output message="tns:RespDeleteUser"/>
+        </operation>
+        <operation name="GetUser">
+            <input message="tns:ReqGetUser"/>
+            <output message="tns:RespGetUser"/>
+        </operation>
+        <operation name="GetUsers">
+            <input message="tns:ReqGetUsers"/>
+            <output message="tns:RespGetUsers"/>
+        </operation>
+        <operation name="GetInventories">
+            <input message="tns:ReqGetInventories"/>
+            <output message="tns:RespGetInventories"/>
+        </operation>
+        <operation name="GetInventoryV2">
+            <input message="tns:ReqGetInventoriesV2"/>
+            <output message="tns:"/>
+        </operation>
+    </portType>
+</definitions>
