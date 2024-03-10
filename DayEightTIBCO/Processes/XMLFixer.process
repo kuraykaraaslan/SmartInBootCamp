@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>Processes/XMLFixer.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:value-of select="$XMLFixer/javaCodeActivityOutput/out_var_1"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>445</pd:endX>
+    <pd:endY>63</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1709964215485</pd:targetNamespace>
+    <pd:activity name="XMLFixer">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>300</pd:x>
+        <pd:y>87</pd:y>
+        <config>
+            <fileName>XMLFixerXMLFixer</fileName>
+            <packageName>Processes.XMLFixer</packageName>
+            <fullsource>package Processes.XMLFixer;
+
+import java.util.*;
+import java.io.*;
+import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.XMLOutputter;
+
+@SuppressWarnings("unchecked")
+public class XMLFixerXMLFixer{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String in_var_1 = "";
+	protected String out_var_1 = "";
+	public String getin_var_1() {
+		return in_var_1;
+	}
+	public void setin_var_1(String val) {
+		in_var_1 = val;
+	}
+	public String getout_var_1() {
+		return out_var_1;
+	}
+	public void setout_var_1(String val) {
+		out_var_1 = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+    public XMLFixerXMLFixer() {
+    }
+
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	In  : String in_var_1
+	Out : String out_var_1
+* Available Variables: DO NOT MODIFY *****/
+        /*
+         * Available Variables: DO NOT MODIFY
+         * In : String in_var_1
+         * Out : String out_var_1
+         * Available Variables: DO NOT MODIFY
+         *****/
+
+        try {
+            String xmlInput = getin_var_1();
+            SAXBuilder builder = new SAXBuilder();
+            Reader input = new StringReader(xmlInput);
+            Document document = builder.build(input);
+            Element root = document.getRootElement();
+            List&lt;Element&gt; orgList = new ArrayList&lt;Element&gt;();
+            orgList = root.getChildren("dynamicquota");
+            List&lt;Element&gt; newList = new ArrayList&lt;Element&gt;();
+
+            for (Element org : orgList) {
+                Element newElement = new Element(org.getName());
+                newElement.addContent(org.getChild("InstanceId").detach());
+                newElement.addContent(org.getChild("Type").detach());
+                newElement.addContent(org.getChild("activationdatetime").detach());
+                newElement.addContent(org.getChild("expirationdatetime").detach());
+                newElement.addContent(org.getChild("InitialTotalVolume").detach());
+                newList.add(newElement);
+            }
+
+            root.removeChildren("dynamicquota");
+            root.addContent(newList);
+
+            XMLOutputter xmlOutput = new XMLOutputter();
+            StringWriter stringWriter = new StringWriter();
+            xmlOutput.output(document, stringWriter);
+            setout_var_1(stringWriter.toString());
+        } catch (Exception e) {
+            setout_var_1(null);
+        }
+    }
+}
+</fullsource>
+            <inputData>
+                <row>
+                    <fieldName>in_var_1</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </inputData>
+            <outputData>
+                <row>
+                    <fieldName>out_var_1</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </outputData>
+            <byteCode>
+                <class>
+                    <name>XMLFixerXMLFixer</name>
+                    <byteCode>yv66vgAAADQAjgkAKQBGCQApAEcKACoASAgASQoAKQBKBwBLCgAGAEgHAEwKAAgATQoABgBOCgBPAFAHAFEKAAwASAgAUgoAEwBTCwBUAFULAFYAVwsAVgBYBwBZCgATAFoKABMATQgAWwoAEwBcCgATAF0KABMAXggAXwgAYAgAYQgAYgsAVABjCgATAGQKABMAZQcAZgoAIQBIBwBnCgAjAEgKACEAaAoAIwBpCgApAGoHAGsHAGwHAG0BAAhpbl92YXJfMQEAEkxqYXZhL2xhbmcvU3RyaW5nOwEACW91dF92YXJfMQEAC2dldGluX3Zhcl8xAQAUKClMamF2YS9sYW5nL1N0cmluZzsBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQALc2V0aW5fdmFyXzEBABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBAAxnZXRvdXRfdmFyXzEBAAxzZXRvdXRfdmFyXzEBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAA1TdGFja01hcFRhYmxlBwBsBwBuBwBLBwBvBwBwBwBZBwBxBwByBwBrAQAKRXhjZXB0aW9ucwEAClNvdXJjZUZpbGUBABVYTUxGaXhlclhNTEZpeGVyLmphdmEMACsALAwALQAsDAA2ADcBAAAMAC4ALwEAGW9yZy9qZG9tL2lucHV0L1NBWEJ1aWxkZXIBABRqYXZhL2lvL1N0cmluZ1JlYWRlcgwANgAzDABzAHQHAHAMAHUAdgEAE2phdmEvdXRpbC9BcnJheUxpc3QBAAxkeW5hbWljcXVvdGEMAHcAeAcAcQwAeQB6BwByDAB7AHwMAH0AfgEAEG9yZy9qZG9tL0VsZW1lbnQMAH8ALwEACkluc3RhbmNlSWQMAIAAgQwAggCDDACEAIUBAARUeXBlAQASYWN0aXZhdGlvbmRhdGV0aW1lAQASZXhwaXJhdGlvbmRhdGV0aW1lAQASSW5pdGlhbFRvdGFsVm9sdW1lDACGAIcMAIgAiQwAhACKAQAcb3JnL2pkb20vb3V0cHV0L1hNTE91dHB1dHRlcgEAFGphdmEvaW8vU3RyaW5nV3JpdGVyDACLAIwMAI0ALwwANQAzAQATamF2YS9sYW5nL0V4Y2VwdGlvbgEAI1Byb2Nlc3Nlcy9YTUxGaXhlci9YTUxGaXhlclhNTEZpeGVyAQAQamF2YS9sYW5nL09iamVjdAEAEGphdmEvbGFuZy9TdHJpbmcBAA5qYXZhL2lvL1JlYWRlcgEAEW9yZy9qZG9tL0RvY3VtZW50AQAOamF2YS91dGlsL0xpc3QBABJqYXZhL3V0aWwvSXRlcmF0b3IBAAVidWlsZAEAJShMamF2YS9pby9SZWFkZXI7KUxvcmcvamRvbS9Eb2N1bWVudDsBAA5nZXRSb290RWxlbWVudAEAFCgpTG9yZy9qZG9tL0VsZW1lbnQ7AQALZ2V0Q2hpbGRyZW4BACQoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL3V0aWwvTGlzdDsBAAhpdGVyYXRvcgEAFigpTGphdmEvdXRpbC9JdGVyYXRvcjsBAAdoYXNOZXh0AQADKClaAQAEbmV4dAEAFCgpTGphdmEvbGFuZy9PYmplY3Q7AQAHZ2V0TmFtZQEACGdldENoaWxkAQAmKExqYXZhL2xhbmcvU3RyaW5nOylMb3JnL2pkb20vRWxlbWVudDsBAAZkZXRhY2gBABQoKUxvcmcvamRvbS9Db250ZW50OwEACmFkZENvbnRlbnQBACYoTG9yZy9qZG9tL0NvbnRlbnQ7KUxvcmcvamRvbS9FbGVtZW50OwEAA2FkZAEAFShMamF2YS9sYW5nL09iamVjdDspWgEADnJlbW92ZUNoaWxkcmVuAQAVKExqYXZhL2xhbmcvU3RyaW5nOylaAQAqKExqYXZhL3V0aWwvQ29sbGVjdGlvbjspTG9yZy9qZG9tL0VsZW1lbnQ7AQAGb3V0cHV0AQAmKExvcmcvamRvbS9Eb2N1bWVudDtMamF2YS9pby9Xcml0ZXI7KVYBAAh0b1N0cmluZwAhACkAKgAAAAIABAArACwAAAAEAC0ALAAAAAYAAQAuAC8AAQAwAAAAHQABAAEAAAAFKrQAAbAAAAABADEAAAAGAAEAAAAPAAEAMgAzAAEAMAAAACIAAgACAAAABiortQABsQAAAAEAMQAAAAoAAgAAABIABQATAAEANAAvAAEAMAAAAB0AAQABAAAABSq0AAKwAAAAAQAxAAAABgABAAAAFQABADUAMwABADAAAAAiAAIAAgAAAAYqK7UAArEAAAABADEAAAAKAAIAAAAYAAUAGQABADYANwABADAAAAA1AAIAAQAAABEqtwADKhIEtQABKhIEtQACsQAAAAEAMQAAABIABAAAABsABAAMAAoADQAQABwAAQA4ADcAAgAwAAABygADAAsAAAEHKrYABUy7AAZZtwAHTbsACFkrtwAJTiwttgAKOgQZBLYACzoFuwAMWbcADToGGQUSDrYADzoGuwAMWbcADToHGQa5ABABADoIGQi5ABEBAJkAehkIuQASAQDAABM6CbsAE1kZCbYAFLcAFToKGQoZCRIWtgAXtgAYtgAZVxkKGQkSGrYAF7YAGLYAGVcZChkJEhu2ABe2ABi2ABlXGQoZCRIctgAXtgAYtgAZVxkKGQkSHbYAF7YAGLYAGVcZBxkKuQAeAgBXp/+CGQUSDrYAH1cZBRkHtgAgV7sAIVm3ACI6CLsAI1m3ACQ6CRkIGQQZCbYAJSoZCbYAJrYAJ6cACUwqAbYAJ7EAAQAAAP0BAAAoAAIAMQAAAG4AGwAAACsABQAsAA0ALQAWAC4AHQAvACQAMAAtADEANgAyAD8ANABeADUAbAA2AHwANwCMADgAnAA5AKwAOgC8ADsAxgA8AMkAPgDRAD8A2QBBAOIAQgDrAEMA9ABEAP0ARwEAAEUBAQBGAQYASAA5AAAANQAE/wBIAAkHADoHADsHADwHAD0HAD4HAD8HAEAHAEAHAEEAAPoAgP8ANgABBwA6AAEHAEIFAEMAAAAEAAEAKAABAEQAAAACAEU=</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <in_var_1>
+                    <xsl:value-of select="$Start/root"/>
+                </in_var_1>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>XMLFixer</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>XMLFixer</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

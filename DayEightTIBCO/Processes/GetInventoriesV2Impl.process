@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1708721390868" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/schemas/bootcamp_bw_kuray_new/SharedResources/Schemas/Schema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/schemas/bootcamp_bw_kuray_new/SharedResources/Schemas/Schema.xsd" schemaLocation="/SharedResources/Schemas/UserSchema.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1708721390868" location="/SharedResources/WSDLs/UsersWSDL.wsdl"/>
+    <pd:name>Processes/GetInventoriesV2Impl.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:ReqGetInventoriesV2"/>
+    <pd:startX>116</pd:startX>
+    <pd:startY>121</pd:startY>
+    <pd:returnBindings>
+        <pfx:RespGetInventoriesV2>
+            <res>
+                <pfx2:UserInventories>
+                    <xsl:for-each select="$LIKE/resultSet/Record">
+                        <pfx2:UserInventory>
+                            <pfx2:InventoryID>
+                                <xsl:value-of select="INVENTORY_ID"/>
+                            </pfx2:InventoryID>
+                            <xsl:if test="INVENTORY_NAME">
+                                <pfx2:InventoryName>
+                                    <xsl:value-of select="INVENTORY_NAME"/>
+                                </pfx2:InventoryName>
+                            </xsl:if>
+                            <xsl:if test="INVENTORY_SPEC">
+                                <pfx2:InventorySpec>
+                                    <xsl:value-of select="INVENTORY_SPEC"/>
+                                </pfx2:InventorySpec>
+                            </xsl:if>
+                            <pfx2:UserID>
+                                <xsl:value-of select="round(USER_ID)"/>
+                            </pfx2:UserID>
+                            <xsl:if test="USER_NAME">
+                                <pfx2:UserName>
+                                    <xsl:value-of select="USER_NAME"/>
+                                </pfx2:UserName>
+                            </xsl:if>
+                        </pfx2:UserInventory>
+                    </xsl:for-each>
+                </pfx2:UserInventories>
+            </res>
+        </pfx:RespGetInventoriesV2>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:RespGetInventoriesV2"/>
+    <pd:endX>732</pd:endX>
+    <pd:endY>120</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1708845202283</pd:targetNamespace>
+    <pd:activity name="LIKE">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>302</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>true</emptyStrAsNil>
+            <statement>SELECT
+    u.USER_ID,
+    u.USER_NAME,
+    u.USER_STATUS,
+    i.INVENTORY_ID, 
+    i.INVENTORY_NAME, 
+    i.INVENTORY_SPEC
+FROM 
+    USERS u
+LEFT OUTER JOIN 
+    INVENTORIES i ON i.USER_ID = u.USER_ID
+WHERE u.USER_NAME LIKE ?  </statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <wizardData/>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>Prepared_Param_1</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>USER_ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>USER_NAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>USER_STATUS</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>INVENTORY_ID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>INVENTORY_NAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>INVENTORY_SPEC</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <Prepared_Param_1>
+                    <xsl:value-of select="$Map-Data/root"/>
+                </Prepared_Param_1>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>248</pd:x>
+        <pd:y>174</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root" type="xsd:string"/>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <xsl:choose>
+                <xsl:when test="string-length($Start/pfx:ReqGetInventoriesV2/Req/pfx2:InventoriesReq/pfx2:UserName) > 0">
+                    <root>
+                        <xsl:value-of select="concat(&quot;%&quot;,$Start/pfx:ReqGetInventoriesV2/Req/pfx2:InventoriesReq/pfx2:UserName,&quot;%&quot;)"/>
+                    </root>
+                </xsl:when>
+                <xsl:otherwise>
+                    <root>
+                        <xsl:value-of select="&quot;%%&quot;"/>
+                    </root>
+                </xsl:otherwise>
+            </xsl:choose>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>LIKE</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>LIKE</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/bootcamp_bw_kuray_new/SharedResources/Schemas/Schema.xsd" xmlns:tns="http://xmlns.example.com/1708721390868" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://ws-i.org/profiles/basic/1.1/xsd" targetNamespace="http://xmlns.example.com/1708721390868">
+    <import namespace="http://www.tibco.com/schemas/bootcamp_bw_kuray_new/SharedResources/Schemas/Schema.xsd" location="../Schemas/UserSchema.xsd"/>
+    <message name="ReqAddUser">
+        <part element="ns:User" name="Request"/>
+    </message>
+    <message name="RespAddUser">
+        <part name="Meesage" type="xsd:string"/>
+    </message>
+    <message name="ReqDeleteUser">
+        <part element="ns:UserID" name="Request"/>
+    </message>
+    <message name="RespDeleteUser">
+        <part name="Message" type="xsd:string"/>
+    </message>
+    <message name="ReqGetUser">
+        <part element="ns:UserID" name="Request"/>
+    </message>
+    <message name="RespGetUser">
+        <part element="ns:User" name="Response"/>
+    </message>
+    <message name="ReqGetUsers"/>
+    <message name="RespGetUsers">
+        <part element="ns:Users" name="Response"/>
+    </message>
+    <message name="ReqGetInventories"/>
+    <message name="RespGetInventories">
+        <part element="ns:UserInventories" name="Response"/>
+    </message>
+    <message name="ReqGetInventoriesV2">
+        <part element="ns:InventoriesReq" name="Req"/>
+    </message>
+    <message name="RespGetInventoriesV2">
+        <part element="ns:UserInventories" name="res"/>
+    </message>
+    <message name="RespGetInventoryV3">
+        <part name="InventoriesResp" element="ns:InventoriesRespSet"/>
+    </message>
+    <message name="RespAsyncAddUser">
+        <part name="response" type="xsd:string"/>
+    </message>
+    <portType name="UsersPortType">
+        <operation name="AddUser">
+            <input message="tns:ReqAddUser"/>
+            <output message="tns:RespAddUser"/>
+        </operation>
+        <operation name="DeleteUser">
+            <input message="tns:ReqDeleteUser"/>
+            <output message="tns:RespDeleteUser"/>
+        </operation>
+        <operation name="GetUser">
+            <input message="tns:ReqGetUser"/>
+            <output message="tns:RespGetUser"/>
+        </operation>
+        <operation name="GetUsers">
+            <input message="tns:ReqGetUsers"/>
+            <output message="tns:RespGetUsers"/>
+        </operation>
+        <operation name="GetInventories">
+            <input message="tns:ReqGetInventories"/>
+            <output message="tns:RespGetInventories"/>
+        </operation>
+        <operation name="GetInventoryV2">
+            <input message="tns:ReqGetInventoriesV2"/>
+            <output message="tns:RespGetInventoriesV2"/>
+        </operation>
+        <operation name="GetInventoryV3">
+            <input message="tns:ReqGetInventoriesV2"/>
+            <output message="tns:RespGetInventoryV3"/>
+        </operation>
+        <operation name="AddUserAsync">
+            <input message="tns:ReqAddUser"/>
+            <output message="tns:RespAsyncAddUser"/>
+        </operation>
+    </portType>
+</definitions>
